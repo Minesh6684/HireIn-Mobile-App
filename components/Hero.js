@@ -3,8 +3,12 @@ const Logo = require("../assets/images/hirein_logo.png");
 
 export default function Home ({ navigation }) {
     const onEmployeeButtonPress = () => {
-      navigation.navigate('Login');
+      navigation.navigate('LoginEmployee');
     };
+
+    const onEmployerButtonPress = () => {
+        navigation.navigate('LoginEmployer')
+    }
     return(
         <View style={styles.buttonContainer}>
             <Image source={Logo} style={styles.logo}/>
@@ -12,7 +16,7 @@ export default function Home ({ navigation }) {
             <Pressable style={styles.employeeButton}  onPress={onEmployeeButtonPress}>
                 <Text style={styles.buttonText}>Employee</Text>
             </Pressable>
-            <Pressable style={styles.employeeButton}>
+            <Pressable style={styles.employeeButton} onPress={onEmployerButtonPress}>
                 <Text style={styles.buttonText}>Employer</Text>
             </Pressable>
         </View>

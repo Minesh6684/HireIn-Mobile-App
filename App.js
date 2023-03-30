@@ -5,8 +5,9 @@ const Stack = createStackNavigator()
 
 import LoginForm from './components/LoginForm';
 import Home from './components/Hero';
-import EmployeeSignupForm from './components/SignupForm';
+import SignupForm from './components/SignupForm';
 import EmployeeDashboard from './components/EmployeeDashboard';
+import EmployerDashboard from './components/EmployerDashboard';
 
 import {
   RecoilRoot,
@@ -22,9 +23,12 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" options={{ headerShown: false }} component={Home} />
-        <Stack.Screen name="Login" options={{ headerShown: false }} component={LoginForm} />
-        <Stack.Screen name="SignupForm" options={{ headerShown: false }} component={EmployeeSignupForm} />
+        <Stack.Screen name="LoginEmployee" options={{ headerShown: false }} component={LoginForm} />
+        <Stack.Screen name="LoginEmployer" options={{ headerShown: false }} component={LoginForm} />
+        <Stack.Screen name="SignupEmployee" options={{ headerShown: false }} component={SignupForm} />
+        <Stack.Screen name="SignupEmployer" options={{ headerShown: false }} component={SignupForm} />
         <Stack.Screen name="employeeDashboard" options={{ headerShown: false }} component={EmployeeDashboard} />
+        <Stack.Screen name="employerDashboard" options={{ headerShown: false }} component={EmployerDashboard} />
       </Stack.Navigator>
     </NavigationContainer>
     </RecoilRoot>
