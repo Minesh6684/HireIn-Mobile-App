@@ -1,8 +1,17 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+import { userState, registerEmployee, registerEmployer} from '../auth/authSlice';
+import { useSetRecoilState } from 'recoil';
 
 
 const EmployeeSignupForm = ({navigation}) => {
+  const route = useRoute();
+  const path = route.name;
+  console.log(path)
+
+  const setUserState = useSetRecoilState(userState);
+
   const [first_name, setFirstName] = useState(null);
   const [last_name, setLastName] = useState(null);
   const [email, setEmail] = useState(null);
@@ -20,6 +29,20 @@ const EmployeeSignupForm = ({navigation}) => {
       email,
       phone,
       password
+    }
+    if (path === "SignupEmployee") {
+      const serverData = await registerEmployee(userData)
+      if (serverData){
+        setUserState({employee:serverData, employer: null});
+        navigation.navigate('employeeDashboard')
+      }
+    }
+    else if(path === "SignupEmployer") {
+      const serverData = await registerEmployer(userData)
+      if(serverData){
+        setUserState({employer:serverData, employee:null});
+        navigation.navigate('employerDashboard')
+      }
     }
   }
   };

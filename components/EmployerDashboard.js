@@ -1,10 +1,10 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import EmployeeProfile from './EmployeeProfile';
+import EmployerProfile from './EmployerProfile'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Tab = createBottomTabNavigator();
 
-const EmployeeDashboard = () => {
+const EmployerDashboard = () => {
       return (
         <Tab.Navigator
             screenOptions={{
@@ -17,7 +17,7 @@ const EmployeeDashboard = () => {
           >
             <Tab.Screen
               name="Profile"
-              component={EmployeeProfile}
+              component={EmployerProfile}
               options={{
                 headerShown: false,
                 tabBarIcon: ({ color, size }) => (
@@ -31,7 +31,7 @@ const EmployeeDashboard = () => {
             />
             <Tab.Screen
               name="menu"
-              component={EmployeeProfile}
+              component={EmployerProfile}
               options={{
                 headerShown: false,
                 tabBarIcon: ({ color, size }) => (
@@ -47,4 +47,4 @@ const EmployeeDashboard = () => {
       );
     };
 
-export default EmployeeDashboard
+export default EmployerDashboard

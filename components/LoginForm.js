@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
-import { employeeState, loginEmployee } from '../auth/authSlice';
-import { useSetRecoilState } from 'recoil';
 
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, Animated} from 'react-native';
+import { userState, loginEmployee, loginEmployer } from '../auth/authSlice';
+import { useSetRecoilState } from 'recoil';
+import { useRoute } from '@react-navigation/native';
 
 export default function LoginForm({ navigation }) {
+  const route = useRoute();
+  const path = route.name;
+
   const onPressedSigupButton = () => {
-    navigation.navigate('SignupForm')
+    path === 'LoginEmployee' ? navigation.navigate('SignupEmployee') : navigation.navigate('SignupEmployer')
   }
 
-  const setEmployeeState = useSetRecoilState(employeeState);
+  const setUserState = useSetRecoilState(userState);
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -17,12 +22,22 @@ export default function LoginForm({ navigation }) {
     if(!email || !password) {
       alert('Please fill all the fields')
     }else {
-      const serverData = await loginEmployee(email, password)
-      if (serverData) {
-      setEmployeeState(serverData);
-      console.log(serverData);
-      navigation.navigate('employeeDashboard')
-      };
+      if(path === 'LoginEmployee') {
+        const serverData = await loginEmployee(email, password)
+        console.log(serverData)
+        if (serverData) {
+          setUserState({employee: serverData, employer: null});
+          navigation.navigate('employeeDashboard')
+        };
+      }
+      else if (path === 'LoginEmployer') {
+        const serverData = await loginEmployer(email, password)
+        if (serverData) {
+          setUserState({employee: null, employer: serverData});
+          navigation.navigate('employerDashboard')
+        };
+      }
+
     }
     }
 

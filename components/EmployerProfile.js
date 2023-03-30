@@ -2,19 +2,19 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native';
 const photo = require('../assets/images/Employer.jpg');
 import { useRecoilState } from 'recoil';
-import { employeeState } from '../auth/authSlice';
-// import { employee, updateEmployee } from '../auth/authSlice';
+import { userState, updateEmployer } from '../auth/authSlice';
 
 const UserProfile = () => {
-
-  const [employeeData, setEmployeeData] = useRecoilState(employeeState);
-  const [editing, setEditing] = useState(false);
-  const [newUser, setNewUser] = useState({ ...employeeData });
-  const { email, phone, address, age, specializations, gender, first_name, last_name } = employeeData;
+  const [userData, setUserData] = useRecoilState(userState);
+  const employerData = userData.employer;
+  console.log(employerData)
+  const [editing, setEditing] = useState(false); 
+  const [newUser, setNewUser] = useState({ ...employerData });
+  const { email, phone, address, age, gender, first_name, last_name } = employerData;
 
   const handleUpdate = async() => {
-    const updatedUser = await updateEmployee(newUser);
-    setEmployeeData(updatedUser)
+    const updatedUser = await updateEmployer(newUser);
+    setUserData({employer: updatedUser, employee: null})
     setEditing(false);
   };
 
@@ -69,14 +69,6 @@ const UserProfile = () => {
             />
           </View>
           <View style={styles.inputRow}>
-            <Text style={styles.label}>Specializations:</Text>
-            <TextInput
-              style={styles.input}
-              value={specializations}
-              onChangeText={(text) => handleChange('specializations', text)}
-            />
-          </View>
-          <View style={styles.inputRow}>
             <Text style={styles.label}>Gender:</Text>
             <TextInput
               style={styles.input}
@@ -106,10 +98,6 @@ const UserProfile = () => {
         {age ? <View style={styles.infoRow}>
           <Text style={styles.infoLabel}>Age:</Text>
           <Text style={styles.infoValue}>{age}</Text>
-        </View> : ''}
-        {specializations ? <View style={styles.infoRow}>
-          <Text style={styles.infoLabel}>Specializations:</Text>
-          <Text style={styles.infoValue}>{specializations.join(', ')}</Text>
         </View> : ''}
         {gender ? <View style={styles.infoRow}>
           <Text style={styles.infoLabel}>Gender:</Text>
