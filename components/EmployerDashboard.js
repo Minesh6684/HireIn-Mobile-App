@@ -30,13 +30,13 @@ const EmployerDashboard = () => {
               }}
             />
             <Tab.Screen
-              name="menu"
+              name="search"
               component={EmployerProfile}
               options={{
                 headerShown: false,
                 tabBarIcon: ({ color, size }) => (
                   <MaterialCommunityIcons
-                    name="menu"
+                    name="search"
                     color={color}
                     size={size}
                   />
