@@ -5,10 +5,10 @@ import { useRecoilState } from 'recoil';
 import { userState, updateEmployer } from '../auth/authSlice';
 
 const UserProfile = () => {
+
+  const [editing, setEditing] = useState(false); 
   const [userData, setUserData] = useRecoilState(userState);
   const employerData = userData.employer;
-  console.log(employerData)
-  const [editing, setEditing] = useState(false); 
   const [newUser, setNewUser] = useState({ ...employerData });
   const { email, phone, address, age, gender, first_name, last_name } = employerData;
 
