@@ -1,7 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import EmployerProfile from "./EmployerProfile";
 import EmployerSearchServices from "./EmployerSearchServices";
+import EmployerAppointment from "./EmployerAppointment";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useRecoilState } from "recoil";
 import { userState } from "../auth/authSlice";
 import { useEffect } from "react";
@@ -47,6 +49,16 @@ const EmployerDashboard = ({ navigation }) => {
               color={color}
               size={size}
             />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Appointments"
+        component={EmployerAppointment}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="schedule" color={color} size={size} />
           ),
         }}
       />
