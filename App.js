@@ -16,6 +16,7 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
+import ExpandedEmployee from './components/ExpandedEmployee';
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
         <Stack.Screen name="SignupEmployer" options={{ headerShown: false }} component={SignupForm} />
         <Stack.Screen name="employeeDashboard" options={{ headerShown: false }} component={EmployeeDashboard} />
         <Stack.Screen name="employerDashboard" options={{ headerShown: false }} component={EmployerDashboard} />
+        <Stack.Screen name="expandedEmployee" options={{ headerShown: false }} component={ExpandedEmployee} />
       </Stack.Navigator>
     </NavigationContainer>
     </RecoilRoot>
