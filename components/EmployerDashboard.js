@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import EmployerProfile from './EmployerProfile'
+import EmployerSearchServices from './EmployerSearchServices'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Tab = createBottomTabNavigator();
@@ -31,7 +32,7 @@ const EmployerDashboard = () => {
             />
             <Tab.Screen
               name="search"
-              component={EmployerProfile}
+              component={EmployerSearchServices}
               options={{
                 headerShown: false,
                 tabBarIcon: ({ color, size }) => (
