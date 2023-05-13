@@ -56,7 +56,7 @@ const EmployerSearchServices = () => {
     const fetchEmployees = async () => {
       try {
         const response = await axios.get(
-          `https://hire-in.vercel.app/employers/search/employee/${selectedSpecialization}`
+          `http://localhost:5005/employers/search/employee/${selectedSpecialization}`
         );
         setEmployees(response.data);
       } catch (error) {
@@ -64,6 +64,7 @@ const EmployerSearchServices = () => {
       }
     };
     fetchEmployees();
+    console.log(employees);
   };
 
   const toggleExpandEmployee = () => {
@@ -83,6 +84,7 @@ const EmployerSearchServices = () => {
       }
     };
     fetchIndividualEmployees(emp._id);
+    setExpandEmployees(true);
   };
 
   const handleHire = async () => {
@@ -99,97 +101,105 @@ const EmployerSearchServices = () => {
     }
   };
 
-  // const navigation = useNavigation();
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Dashboard</Text>
-      {items && (
-        <View style={{ ...styles.inputRow, zIndex: 2 }}>
-          <Text style={styles.label}>Select Specialization:</Text>
+    <>
+      {expandedEmployee && isEmployeeExpanded && (
+        <View style={styles.expandedEmployeeContainer}>
+          <Text style={styles.expandedEmployeeTitle}>Employee Details</Text>
+          <Text style={styles.expandedEmployeeText}>
+            First Name: {first_name}
+          </Text>
+          <Text style={styles.expandedEmployeeText}>
+            Last Name: {last_name}
+          </Text>
+          <Text style={styles.expandedEmployeeText}>
+            Specialization: {specialization}
+          </Text>
+          <Text style={styles.expandedEmployeeText}>Age: {age}</Text>
+          <Text style={styles.expandedEmployeeText}>Phone: {phone}</Text>
+          <Text style={styles.expandedEmployeeText}>Email: {email}</Text>
           <TouchableOpacity
-            onPress={handleDropdownPress}
-            style={{ ...styles.inputContainer, zIndex: 2 }}
+            style={styles.hirebutton}
+            onPress={() => setExpandEmployees(false)}
           >
-            <DropDownPicker
-              open={open}
-              value={selectedSpecialization}
-              items={items}
-              setOpen={setOpen}
-              setValue={setSelectedSpecialization}
-              setItems={setItems}
-              onChangeValue={handleDropdownValueChange}
-              style={styles.dropdown}
-              containerStyle={styles.dropdownContainer}
-              textStyle={styles.dropdownText}
-              dropDownStyle={styles.dropdownList}
-              listItemLabelStyle={styles.dropdownItemLabel}
-              listItemContainerStyle={styles.dropdownItemContainer}
-              dropDownMaxHeight={150}
-              zIndex={3}
-              modalContentContainerStyle={styles.dropdownModal}
-            />
+            <Text style={styles.hirebuttonText}>Back</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-            <Text style={styles.buttonText}>Submit</Text>
+          <TouchableOpacity
+            style={styles.hirebutton}
+            onPress={() => handleHire(expandedEmployee._id)}
+          >
+            <Text style={styles.hirebuttonText}>Hire</Text>
           </TouchableOpacity>
         </View>
       )}
-      <View style={styles.employeesContainer}>
-        <Text style={styles.subheading}>List of Employees</Text>
-        {employees.length === 0 ? (
-          <Text style={styles.noEmployeeText} key="no_employee">
-            No employees found.
-          </Text>
-        ) : (
-          employees.map((employee) => (
-            <View style={styles.employeeItem} key={employee.id}>
-              <Text style={styles.employeeName}>
-                {employee.first_name} {employee.last_name}
-              </Text>
-              <Text style={styles.employeeSpecialization}>
-                {employee.specialization}
-              </Text>
+
+      {!isEmployeeExpanded && (
+        <View style={styles.container}>
+          <Text style={styles.heading}>Dashboard</Text>
+          {items && (
+            <View style={{ ...styles.inputRow, zIndex: 2 }}>
+              <Text style={styles.label}>Select Specialization:</Text>
               <TouchableOpacity
-                style={styles.button}
-                onPress={() => handleBookAppointment(employee)}
+                onPress={handleDropdownPress}
+                style={{ zIndex: 2, marginBottom: 10 }}
               >
-                <Text style={styles.buttonText}>Book Appointment</Text>
+                <DropDownPicker
+                  open={open}
+                  value={selectedSpecialization}
+                  items={items}
+                  setOpen={setOpen}
+                  setValue={setSelectedSpecialization}
+                  setItems={setItems}
+                  onChangeValue={handleDropdownValueChange}
+                  style={styles.dropdown}
+                  containerStyle={styles.dropdownContainer}
+                  textStyle={styles.dropdownText}
+                  dropDownStyle={styles.dropdownList}
+                  listItemLabelStyle={styles.dropdownItemLabel}
+                  listItemContainerStyle={styles.dropdownItemContainer}
+                  dropDownMaxHeight={150}
+                  zIndex={3}
+                  modalContentContainerStyle={styles.dropdownModal}
+                />
               </TouchableOpacity>
-              {expandedEmployee && expandedEmployee._id === employee._id && (
-                <View style={styles.expandedEmployeeContainer}>
-                  <Text style={styles.expandedEmployeeTitle}>
-                    Employee Details
+              <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                <Text style={styles.buttonText}>Submit</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          <View style={styles.employeesContainer}>
+            <Text style={styles.subheading}>List of Employees</Text>
+            {employees.length === 0 ? (
+              <Text style={styles.noEmployeeText} key="no_employee">
+                No employees found.
+              </Text>
+            ) : (
+              employees.map((employee) => (
+                <View style={styles.employeeItem} key={employee.id}>
+                  <Text style={styles.employeeName}>
+                    {employee.first_name} {employee.last_name}
                   </Text>
-                  <Text style={styles.expandedEmployeeText}>
-                    First Name: {first_name}
+                  <Text style={styles.employeeSpecialization}>
+                    {employee.specialization}
                   </Text>
-                  <Text style={styles.expandedEmployeeText}>
-                    Last Name: {last_name}
-                  </Text>
-                  <Text style={styles.expandedEmployeeText}>
-                    Specialization: {specialization}
-                  </Text>
-                  <Text style={styles.expandedEmployeeText}>Age: {age}</Text>
-                  <Text style={styles.expandedEmployeeText}>
-                    Phone: {phone}
-                  </Text>
-                  <Text style={styles.expandedEmployeeText}>
-                    Email: {email}
+                  <Text style={styles.employeeSpecialization}>
+                    <Text style={{ fontWeight: 600 }}>Gender:</Text>{" "}
+                    {employee.gender}{" "}
+                    <Text style={{ fontWeight: 600 }}>Age:</Text> {employee.age}
                   </Text>
                   <TouchableOpacity
-                    style={styles.hirebutton}
-                    onPress={() => handleHire(employee)}
+                    style={styles.button}
+                    onPress={() => handleBookAppointment(employee)}
                   >
-                    <Text style={styles.hirebuttonText}>Hire</Text>
+                    <Text style={styles.buttonText}>Book Appointment</Text>
                   </TouchableOpacity>
                 </View>
-              )}
-            </View>
-          ))
-        )}
-      </View>
-    </View>
+              ))
+            )}
+          </View>
+        </View>
+      )}
+    </>
   );
 };
 
@@ -223,6 +233,7 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     backgroundColor: "#fafafa",
+    textAlign: "center",
   },
   dropdownContainer: {
     borderWidth: 0,

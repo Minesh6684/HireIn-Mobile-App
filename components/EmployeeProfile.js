@@ -192,13 +192,7 @@ const UserProfile = () => {
               </View>
             )}
 
-            <View style={styles.inputRow}>
-              {/* <TextInput
-                style={styles.input}
-                value={specialization}
-                onChangeText={(text) => handleChange("specialization", text)}
-              /> */}
-            </View>
+            <View style={styles.inputRow}></View>
             <View style={styles.inputRow}>
               <Text style={styles.label}>Gender:</Text>
               <TextInput
