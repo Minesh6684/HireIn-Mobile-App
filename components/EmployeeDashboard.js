@@ -1,10 +1,12 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import EmployeeProfile from "./EmployeeProfile";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { userState } from "../auth/authSlice";
 import { TouchableOpacity } from 'react-native'
+import EmployeeAppointments from "./EmployeeAppointments";
 
 const Tab = createBottomTabNavigator();
 
@@ -36,12 +38,12 @@ const EmployeeDashboard = ({ navigation }) => {
         }}
       />
       <Tab.Screen
-        name="menu"
-        component={EmployeeProfile}
+        name="Appointments"
+        component={EmployeeAppointments}
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="menu" color={color} size={size} />
+            <MaterialIcons name="schedule" color={color} size={size} />
           ),
         }}
       />
