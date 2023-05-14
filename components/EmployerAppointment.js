@@ -36,6 +36,7 @@ const EmployerAppointment = () => {
                 {appointment.employee.first_name}{" "}
                 {appointment.employee.last_name}
               </Text>
+              <Text>{appointment.employee.specialization}</Text>
             </View>
             <View style={styles.cardBody}>
               <Text style={styles.cardBodyText}>
@@ -77,6 +78,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   card: {
+    width: 400,
     backgroundColor: "#fff",
     borderRadius: 10,
     padding: 20,
@@ -87,6 +89,8 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     paddingBottom: 10,
     marginBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   cardHeaderText: {
     fontSize: 18,
