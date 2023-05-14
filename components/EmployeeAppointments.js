@@ -15,7 +15,7 @@ const EmployeeAppointments = () => {
         },
       };
       const response = await axios.get(
-        "http://localhost:5005/employees/get-appointments/",
+        "http://hire-in.vercel.app/employees/get-appointments/",
         config
       );
       setAppointments(response.data);
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   card: {
+    width: 400,
     backgroundColor: "#fff",
     borderRadius: 10,
     padding: 20,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity,  Button, Image  } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import DropDownPicker from "react-native-dropdown-picker";
 import axios from "axios";
@@ -9,6 +9,8 @@ import { userState } from "../auth/authSlice";
 const EmployerSearchServices = () => {
   const [userData, setUserData] = useRecoilState(userState);
   const employerData = userData.employer;
+  const [imageUri, setImageUri] = useState(null);
+
 
   /**/
   const [expandedEmployee, setExpandedEmployees] = useState();
@@ -48,7 +50,6 @@ const EmployerSearchServices = () => {
   };
 
   const handleDropdownValueChange = (value) => {
-    // console.log(value);
     setSelectedSpecialization(value);
   };
 
@@ -56,7 +57,7 @@ const EmployerSearchServices = () => {
     const fetchEmployees = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5005/employers/search/employee/${selectedSpecialization}`
+          `http://hire-in.vercel.app/employers/search/employee/${selectedSpecialization}`
         );
         setEmployees(response.data);
       } catch (error) {
@@ -103,47 +104,17 @@ const EmployerSearchServices = () => {
 
   return (
     <>
-      {expandedEmployee && isEmployeeExpanded && (
-        <View style={styles.expandedEmployeeContainer}>
-          <Text style={styles.expandedEmployeeTitle}>Employee Details</Text>
-          <Text style={styles.expandedEmployeeText}>
-            First Name: {first_name}
-          </Text>
-          <Text style={styles.expandedEmployeeText}>
-            Last Name: {last_name}
-          </Text>
-          <Text style={styles.expandedEmployeeText}>
-            Specialization: {specialization}
-          </Text>
-          <Text style={styles.expandedEmployeeText}>Age: {age}</Text>
-          <Text style={styles.expandedEmployeeText}>Phone: {phone}</Text>
-          <Text style={styles.expandedEmployeeText}>Email: {email}</Text>
-          <TouchableOpacity
-            style={styles.hirebutton}
-            onPress={() => setExpandEmployees(false)}
-          >
-            <Text style={styles.hirebuttonText}>Back</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.hirebutton}
-            onPress={() => handleHire(expandedEmployee._id)}
-          >
-            <Text style={styles.hirebuttonText}>Hire</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-
       {!isEmployeeExpanded && (
         <View style={styles.container}>
-          <Text style={styles.heading}>Dashboard</Text>
+          <Text style={styles.heading}>Search Employees</Text>
           {items && (
             <View style={{ ...styles.inputRow, zIndex: 2 }}>
-              <Text style={styles.label}>Select Specialization:</Text>
               <TouchableOpacity
                 onPress={handleDropdownPress}
                 style={{ zIndex: 2, marginBottom: 10 }}
               >
                 <DropDownPicker
+                  placeholder="Select Specialization"
                   open={open}
                   value={selectedSpecialization}
                   items={items}
@@ -197,6 +168,36 @@ const EmployerSearchServices = () => {
               ))
             )}
           </View>
+        </View>
+      )}
+
+      {expandedEmployee && isEmployeeExpanded && (
+        <View style={styles.expandedEmployeeContainer}>
+          <Text style={styles.expandedEmployeeTitle}>Employee Details</Text>
+          <Text style={styles.expandedEmployeeText}>
+            First Name: {first_name}
+          </Text>
+          <Text style={styles.expandedEmployeeText}>
+            Last Name: {last_name}
+          </Text>
+          <Text style={styles.expandedEmployeeText}>
+            Specialization: {specialization}
+          </Text>
+          <Text style={styles.expandedEmployeeText}>Age: {age}</Text>
+          <Text style={styles.expandedEmployeeText}>Phone: {phone}</Text>
+          <Text style={styles.expandedEmployeeText}>Email: {email}</Text>
+          <TouchableOpacity
+            style={styles.hirebutton}
+            onPress={() => setExpandEmployees(false)}
+          >
+            <Text style={styles.hirebuttonText}>Back</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.hirebutton}
+            onPress={() => handleHire(expandedEmployee._id)}
+          >
+            <Text style={styles.hirebuttonText}>Hire</Text>
+          </TouchableOpacity>
         </View>
       )}
     </>
@@ -335,17 +336,14 @@ const styles = StyleSheet.create({
     backgroundColor: "#f0f0f0",
     padding: 10,
     marginTop: 10,
-    // Add other styles for the expanded employee container
   },
   expandedEmployeeTitle: {
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 5,
-    // Add styles for the expanded employee title
   },
   expandedEmployeeText: {
     marginBottom: 3,
-    // Add styles for the expanded employee text
   },
 });
 
