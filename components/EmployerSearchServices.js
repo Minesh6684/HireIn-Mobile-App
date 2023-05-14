@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, TouchableOpacity,  Button, Image  } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Button,
+  Image,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import DropDownPicker from "react-native-dropdown-picker";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { userState } from "../auth/authSlice";
 
-const EmployerSearchServices = () => {
+const EmployerSearchServices = ({ navigation }) => {
   const [userData, setUserData] = useRecoilState(userState);
   const employerData = userData.employer;
   const [imageUri, setImageUri] = useState(null);
-
 
   /**/
   const [expandedEmployee, setExpandedEmployees] = useState();
@@ -99,6 +105,7 @@ const EmployerSearchServices = () => {
     );
     if (response.data.message) {
       alert(response.data.message);
+      navigation.navigate("Appointments");
     }
   };
 
@@ -174,61 +181,31 @@ const EmployerSearchServices = () => {
       {expandedEmployee && isEmployeeExpanded && (
         <View style={styles.expandedEmployeeContainer}>
           <Text style={styles.expandedEmployeeTitle}>Employee Details</Text>
-          <Text style={styles.expandedEmployeeText}>
-            First Name: {first_name}
-          </Text>
-          <Text style={styles.expandedEmployeeText}>
-            Last Name: {last_name}
-          </Text>
-          <Text style={styles.expandedEmployeeText}>
-            Specialization: {specialization}
-          </Text>
-          <Text style={styles.expandedEmployeeText}>Age: {age}</Text>
-          <Text style={styles.expandedEmployeeText}>Phone: {phone}</Text>
-          <Text style={styles.expandedEmployeeText}>Email: {email}</Text>
-          <TouchableOpacity
-            style={styles.hirebutton}
-            onPress={() => setExpandEmployees(false)}
-          >
-            <Text style={styles.hirebuttonText}>Back</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.hirebutton}
-            onPress={() => handleHire(expandedEmployee._id)}
-          >
-            <Text style={styles.hirebuttonText}>Hire</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-            {expandedEmployee && isEmployeeExpanded && (
-        <View style={styles.expandedEmployeeContainer}>
-        <View style={styles.employeesContainer}>
-          <Text style={styles.expandedEmployeeTitle}>Employee Details</Text>
-          <Text style={styles.expandedEmployeeText}>
-            First Name: {first_name}
-          </Text>
-          <Text style={styles.expandedEmployeeText}>
-            Last Name: {last_name}
-          </Text>
-          <Text style={styles.expandedEmployeeText}>
-            Specialization: {specialization}
-          </Text>
-          <Text style={styles.expandedEmployeeText}>Age: {age}</Text>
-          <Text style={styles.expandedEmployeeText}>Phone: {phone}</Text>
-          <Text style={styles.expandedEmployeeText}>Email: {email}</Text>
-          <TouchableOpacity
-            style={styles.hirebutton}
-            onPress={() => setExpandEmployees(false)}
-          >
-            <Text style={styles.hirebuttonText}>Back</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.hirebutton}
-            onPress={() => handleHire(expandedEmployee._id)}
-          >
-            <Text style={styles.hirebuttonText}>Hire</Text>
-          </TouchableOpacity>
-        </View>
+          <View style={styles.expandedEmployeeCard}>
+            <Text style={styles.expandedEmployeeNameText}>
+              {first_name} {last_name}
+            </Text>
+            <Text style={styles.expandedEmployeeText}>
+              Specialization: {specialization}
+            </Text>
+            <Text style={styles.expandedEmployeeText}>Age: {age}</Text>
+            <Text style={styles.expandedEmployeeText}>Phone: {phone}</Text>
+            <Text style={styles.expandedEmployeeText}>Email: {email}</Text>
+            <View style={styles.expandedEmployeeButtonContainer}>
+              <TouchableOpacity
+                style={styles.hirebutton}
+                onPress={() => setExpandEmployees(false)}
+              >
+                <Text style={styles.hirebuttonText}>Back</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.hirebutton}
+                onPress={() => handleHire(expandedEmployee._id)}
+              >
+                <Text style={styles.hirebuttonText}>Hire</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
       )}
     </>
@@ -241,9 +218,6 @@ const styles = StyleSheet.create({
     padding: 16,
     justifyContent: "center",
     alignItems: "center",
-  },
-  expandedEmployeeContainer:{
-    flex: 1,
   },
   heading: {
     fontSize: 24,
@@ -377,17 +351,60 @@ const styles = StyleSheet.create({
     color: "#666",
   },
   expandedEmployeeContainer: {
-    backgroundColor: "#f0f0f0",
-    padding: 10,
-    marginTop: 10,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  expandedEmployeeCard: {
+    backgroundColor: "#FFFFFF",
+    width: 400,
+    borderRadius: 8,
+    padding: 26,
+    marginVertical: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   expandedEmployeeTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    marginBottom: 5,
+    marginBottom: 10,
+  },
+  expandedEmployeeNameText: {
+    fontWeight: "700",
+    marginBottom: 10,
+    fontSize: 20,
   },
   expandedEmployeeText: {
-    marginBottom: 3,
+    marginBottom: 5,
+    fontSize: 16,
+  },
+  expandedEmployeeButtonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "100%",
+  },
+
+  hirebutton: {
+    backgroundColor: "#007AFF",
+    borderRadius: 4,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    width: "48%",
+    marginTop: 20,
+    alignSelf: "flex-end",
+  },
+  hirebuttonText: {
+    color: "#FFFFFF",
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
 
