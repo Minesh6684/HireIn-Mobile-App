@@ -200,6 +200,37 @@ const EmployerSearchServices = () => {
           </TouchableOpacity>
         </View>
       )}
+            {expandedEmployee && isEmployeeExpanded && (
+        <View style={styles.expandedEmployeeContainer}>
+        <View style={styles.employeesContainer}>
+          <Text style={styles.expandedEmployeeTitle}>Employee Details</Text>
+          <Text style={styles.expandedEmployeeText}>
+            First Name: {first_name}
+          </Text>
+          <Text style={styles.expandedEmployeeText}>
+            Last Name: {last_name}
+          </Text>
+          <Text style={styles.expandedEmployeeText}>
+            Specialization: {specialization}
+          </Text>
+          <Text style={styles.expandedEmployeeText}>Age: {age}</Text>
+          <Text style={styles.expandedEmployeeText}>Phone: {phone}</Text>
+          <Text style={styles.expandedEmployeeText}>Email: {email}</Text>
+          <TouchableOpacity
+            style={styles.hirebutton}
+            onPress={() => setExpandEmployees(false)}
+          >
+            <Text style={styles.hirebuttonText}>Back</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.hirebutton}
+            onPress={() => handleHire(expandedEmployee._id)}
+          >
+            <Text style={styles.hirebuttonText}>Hire</Text>
+          </TouchableOpacity>
+        </View>
+        </View>
+      )}
     </>
   );
 };
@@ -210,6 +241,9 @@ const styles = StyleSheet.create({
     padding: 16,
     justifyContent: "center",
     alignItems: "center",
+  },
+  expandedEmployeeContainer:{
+    flex: 1,
   },
   heading: {
     fontSize: 24,
@@ -265,6 +299,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
     width: "100%",
+    marginTop: 15,
   },
   buttonText: {
     color: "#FFFFFF",
@@ -293,8 +328,8 @@ const styles = StyleSheet.create({
   },
   subheading: {
     fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 12,
+    fontWeight: 700,
+    marginBottom: 18,
     color: "#333",
   },
   employeeContainer: {
@@ -308,13 +343,22 @@ const styles = StyleSheet.create({
     backgroundColor: "#f2f2f2",
   },
   employeeItem: {
+    width: 340,
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: "#fafafa",
-    borderWidth: 1,
     borderRadius: 4,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,
+    marginBottom: 22,
   },
   employeeName: {
     fontSize: 18,
