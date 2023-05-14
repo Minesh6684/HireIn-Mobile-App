@@ -56,7 +56,7 @@ const EmployerSearchServices = () => {
     const fetchEmployees = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5005/employers/search/employee/${selectedSpecialization}`
+          `http://hire-in.vercel.app/employers/search/employee/${selectedSpecialization}`
         );
         setEmployees(response.data);
       } catch (error) {
@@ -105,6 +105,7 @@ const EmployerSearchServices = () => {
     <>
       {expandedEmployee && isEmployeeExpanded && (
         <View style={styles.expandedEmployeeContainer}>
+        <View style={styles.employeesContainer}>
           <Text style={styles.expandedEmployeeTitle}>Employee Details</Text>
           <Text style={styles.expandedEmployeeText}>
             First Name: {first_name}
@@ -131,19 +132,20 @@ const EmployerSearchServices = () => {
             <Text style={styles.hirebuttonText}>Hire</Text>
           </TouchableOpacity>
         </View>
+        </View>
       )}
 
       {!isEmployeeExpanded && (
         <View style={styles.container}>
-          <Text style={styles.heading}>Dashboard</Text>
+          <Text style={styles.heading}>Search Services</Text>
           {items && (
             <View style={{ ...styles.inputRow, zIndex: 2 }}>
-              <Text style={styles.label}>Select Specialization:</Text>
               <TouchableOpacity
                 onPress={handleDropdownPress}
                 style={{ zIndex: 2, marginBottom: 10 }}
               >
                 <DropDownPicker
+                  placeholder="Select Specialization"
                   open={open}
                   value={selectedSpecialization}
                   items={items}
@@ -210,6 +212,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  expandedEmployeeContainer:{
+    flex: 1,
+  },
   heading: {
     fontSize: 24,
     fontWeight: "bold",
@@ -264,6 +269,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
     width: "100%",
+    marginTop: 15,
   },
   buttonText: {
     color: "#FFFFFF",
@@ -292,8 +298,8 @@ const styles = StyleSheet.create({
   },
   subheading: {
     fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 12,
+    fontWeight: 700,
+    marginBottom: 18,
     color: "#333",
   },
   employeeContainer: {
@@ -307,13 +313,22 @@ const styles = StyleSheet.create({
     backgroundColor: "#f2f2f2",
   },
   employeeItem: {
+    width: 340,
     flexDirection: "column",
     alignItems: "center",
     backgroundColor: "#fafafa",
-    borderWidth: 1,
     borderRadius: 4,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
     paddingVertical: 10,
     paddingHorizontal: 20,
+    marginBottom: 22,
   },
   employeeName: {
     fontSize: 18,

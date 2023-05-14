@@ -15,7 +15,7 @@ const EmployerAppointment = () => {
         },
       };
       const response = await axios.get(
-        "http://localhost:5005/employers/get-appointment/",
+        "http://hire-in.vercel.app/employers/get-appointment/",
         config
       );
       setAppointments(response.data);
